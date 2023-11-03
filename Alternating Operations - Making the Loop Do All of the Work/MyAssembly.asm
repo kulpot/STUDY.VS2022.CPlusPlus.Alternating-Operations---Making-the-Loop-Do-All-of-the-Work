@@ -22,7 +22,7 @@ doit proc
 	
 	; -------------- Alternating Operations - Making the Loop Do All of the Work ----------------------------
 	
-	; * 2^1 + 2^2 * 2^3 + 2^4 * 2^5 + ..... 2^n
+	; * 2^1 + 2^2 * 2^3 + 2^4 * 2^5 + 2^6 +..... 2^n
 
 	;	 loop(ebx)		Power(power)	total(ecx)		totalHex
 ;		2^1				2				2				2
@@ -30,25 +30,17 @@ doit proc
 ;		2^3				8				48				30
 ;		2^4				16				64				40
 ;		2^5				32				2048			800
+;		2^6				64				2112			840
 
-	mov ebx, 2
-	xor ecx, ecx		; 0 out ecx
-	add ecx, power
+	mov ebx, 2			; Base
+	;xor ecx, ecx		; 0 out ecx -- startout in zero erases the total
+	mov ecx, 1
 
-again:
+again:				; loop mul to add
 	; Next power:	; redundant code
 	mov eax, power		; for intel structure running eax
 	mul ebx				; for intel structure running eax
 	mov power, eax		; for intel structure running eax
-	inc count
-
-	; Add the power to total
-	add ecx, power
-
-	; Next power:	; redundant code
-	mov eax, power
-	mul ebx			
-	mov power, eax
 	inc count
 
 	; Multiply the current power to the total
@@ -56,8 +48,16 @@ again:
 	mul ecx				; replace total to ecx
 	mov ecx, eax		; replace total to ecx
 
-	; Repeat if necessary
+	; Next power:	; redundant code
+	mov eax, power
+	mul ebx			
+	mov power, eax
 	inc count
+
+	; Add the power to total
+	add ecx, power
+
+	; Repeat if necessary
 	cmp count, 5		
 	jl again
 	ret
