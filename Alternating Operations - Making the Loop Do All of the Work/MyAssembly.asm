@@ -6,9 +6,13 @@
 ;count dword ?		; -------> ---- Assembly Adding Powers ----
 ;	counter dword 0		; dword(doubleWord) is 32bits and 2words ---> 1byte=8bits, 2bytes=word, 4bytes(32bits)=2words -> dword
 ;count dword 0		; ------- Alternating Operations - A First Code Attempt --------
-count dword 1		; -------------- Alternating Operations - Correct But Not Elegant It Smells ------------------------
-power dword 2		; ------- Alternating Operations - A First Code Attempt --------
+;count dword 1		; -------------- Alternating Operations - Correct But Not Elegant It Smells ------------------------
+;power dword 2		; ------- Alternating Operations - A First Code Attempt --------
 ;total dword 0		; ------- Alternating Operations - A First Code Attempt --------
+
+count dword 0		; -------------- Alternating Operations - Making the Loop Do All of the Work ----------------------------
+power dword 1		; -------------- Alternating Operations - Making the Loop Do All of the Work ----------------------------
+
 
 .code
 
@@ -18,7 +22,7 @@ doit proc
 	
 	; -------------- Alternating Operations - Making the Loop Do All of the Work ----------------------------
 	
-	; 2^1 + 2^2 * 2^3 + 2^4 * 2^5 + ..... 2^n
+	; * 2^1 + 2^2 * 2^3 + 2^4 * 2^5 + ..... 2^n
 
 	;	 loop(ebx)		Power(power)	total(ecx)		totalHex
 ;		2^1				2				2				2
